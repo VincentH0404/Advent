@@ -11,6 +11,7 @@ public class AdventDay1 {
         ArrayList<Integer> leftNum = new ArrayList<>();
         ArrayList<Integer> rightNum = new ArrayList<>();
         int total = 0;
+        int total2 = 0;
         for (int i = 0; i < fileData.size(); i++) {
             String[] split_sample = fileData.get(i).split("   ");
             leftNum.add(Integer.parseInt(split_sample[0]));
@@ -21,10 +22,24 @@ public class AdventDay1 {
         Collections.sort(rightNum);
         for (int i = 0; i < leftNum.size(); i++) {
             total += Math.abs(leftNum.get(i) - rightNum.get(i));
+            int similar = 0;
+            for (int j = 0; j < rightNum.size(); j++) {
+                int num1 = leftNum.get(i);
+                int num2 = rightNum.get(j);
+                if (num1 == num2) {
+                    similar++;
+                }
+            }
+
+            total2 += (leftNum.get(i) * similar);
         }
         System.out.println(total);
+        System.out.println(total2);
         System.out.println(leftNum);
         System.out.println(rightNum);
+
+
+
     }
 
     public static ArrayList<String> getFileData(String fileName) {
