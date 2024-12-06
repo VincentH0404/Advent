@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class AdventDay5 {
@@ -19,20 +18,23 @@ public class AdventDay5 {
             rightNum.add(Integer.parseInt(fileData2.get(i).substring(3)));
         }
         for (int i = 0; i < fileData1.size(); i++) {
-            for (int j = 0; j < fileData1.get(i).length(); j++) {
                 String[] split_sample = fileData1.get(i).split(",");
                 for (int k = 0; k < split_sample.length; k++) {
                     order.add(Integer.parseInt(split_sample[k]));
                 }
                 for (int k = 0; k < order.size(); k++) {
                     int num1 = order.get(k);
+
                     for (int m = 0; m < leftNum.size(); m++) {
                         int num2 = leftNum.get(m);
                         int num3 = rightNum.get(m);
                         if (num1 == num2) {
-                            for (int x = k; x > order.size(); x--) {
+                            for (int x = 0; x < k; x++) {
                                 if (order.get(x) == num3) {
                                     works = false;
+                                    System.out.println(num1);
+                                    System.out.println(num2);
+                                    System.out.println(num3);
                                 }
                             }
                         }
@@ -40,10 +42,11 @@ public class AdventDay5 {
                 }
                 if (works) {
                     total += order.get(order.size() / 2);
+                    System.out.println(order);
                 }
                 order = new ArrayList<>();
                 works = true;
-            }
+
         }
         System.out.println(leftNum);
         System.out.println(rightNum);
