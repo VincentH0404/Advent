@@ -93,8 +93,106 @@ public class AdventDay6 {
             }
         }
         System.out.println(count);
+        fileData = getFileData("src/Day6Input");
+        count = 0;
+        for (int i = 0; i < fileData.size(); i++) {
+            for (int j = 0; j < fileData.get(i).length(); j++) {
+                if (fileData.get(i).charAt(j) == '^') {
+                    x = j;
+                    y = i;
+                }
+            }
+        }
+        for (int i = 0; i < fileData.size(); i++) {
+            for (int j = 0; j < fileData.get(i).length(); j++) {
+                str = "";
+                str += fileData.get(i).substring(0, j);
+                str += "#";
+                str += fileData.get(y).substring(j+1);
+                fileData.set(i, str);
+                if (doesLoop(x, y, fileData)) {
+                    count++;
+                }
+                fileData = getFileData("src/Day6Input");
+            }
+        }
+        System.out.println(count);
     }
 
+    public static Boolean doesLoop(int x, int y, ArrayList<String> fileData) {
+        Boolean move_up = true;
+        Boolean move_down = false;
+        Boolean move_right = false;
+        Boolean move_left = false;
+        int retry = 0;
+        String str = "";
+        str += fileData.get(y).substring(0, x);
+        str += "X";
+        str += fileData.get(y).substring(x + 1);
+        fileData.set(y, str);
+        while (y != fileData.size() - 1 && y != 0 && x != fileData.get(0).length() - 1 && x != 0 && retry != 5000000) {
+            if (move_up) {
+                if (fileData.get(y - 1).charAt(x) == '#') {
+                    move_up = false;
+                    move_right = true;
+                } else {
+                    str = "";
+                    str += fileData.get(y-1).substring(0, x);
+                    str += "X";
+                    str += fileData.get(y-1).substring(x + 1);
+                    fileData.set(y-1, str);
+                    y--;
+                }
+            }
+            if (move_right) {
+                if (fileData.get(y).charAt(x+1) == '#') {
+                    move_right = false;
+                    move_down = true;
+                }
+                else {
+                    str = "";
+                    str += fileData.get(y).substring(0, x+1);
+                    str += "X";
+                    str += fileData.get(y).substring(x+2);
+                    fileData.set(y, str);
+                    x++;
+                }
+            }
+            if (move_down) {
+                if (fileData.get(y+1).charAt(x) == '#') {
+                    move_down = false;
+                    move_left = true;
+                }
+                else {
+                    str = "";
+                    str += fileData.get(y+1).substring(0, x);
+                    str += "X";
+                    str += fileData.get(y+1).substring(x+1);
+                    fileData.set(y+1, str);
+                    y++;
+                }
+            }
+            if (move_left) {
+                if (fileData.get(y).charAt(x-1) == '#') {
+                    move_left = false;
+                    move_up = true;
+                }
+                else {
+                    str = "";
+                    str += fileData.get(y).substring(0, x-1);
+                    str += "X";
+                    str += fileData.get(y).substring(x);
+                    fileData.set(y, str);
+                    x--;
+                }
+            }
+            retry++;
+        }
+        if (retry == 5000000) {
+            return true;
+        }
+        return false;
+    }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
