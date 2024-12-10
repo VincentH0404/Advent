@@ -18,22 +18,26 @@ public class AdventDay6 {
                 }
             }
         }
-        System.out.println(fileData.get(y).charAt(x));
         Boolean move_up = true;
         Boolean move_down = false;
         Boolean move_right = false;
         Boolean move_left = false;
-        while (x != 0 || x != fileData.size() - 1 || y != 0 || y != fileData.get(0).length()) {
+        String str = "";
+        str += fileData.get(y).substring(0, x);
+        str += "X";
+        str += fileData.get(y).substring(x + 1);
+        fileData.set(y, str);
+        while (y != fileData.size() - 1 && y != 0 && x != fileData.get(0).length() && x != 0) {
             if (move_up) {
                 if (fileData.get(y - 1).charAt(x) == '#') {
                     move_up = false;
                     move_right = true;
                 } else {
-                    String str = "";
-                    str += fileData.get(y).substring(0, x);
+                    str = "";
+                    str += fileData.get(y-1).substring(0, x);
                     str += "X";
-                    str += fileData.get(y).substring(x + 1);
-                    fileData.set(y, str);
+                    str += fileData.get(y-1).substring(x + 1);
+                    fileData.set(y-1, str);
                     y--;
                 }
             }
@@ -43,10 +47,10 @@ public class AdventDay6 {
                     move_down = true;
                 }
                 else {
-                    String str = "";
-                    str += fileData.get(y).substring(0, x);
+                    str = "";
+                    str += fileData.get(y).substring(0, x+1);
                     str += "X";
-                    str += fileData.get(y).substring(x+1);
+                    str += fileData.get(y).substring(x+2);
                     fileData.set(y, str);
                     x++;
                 }
@@ -57,11 +61,11 @@ public class AdventDay6 {
                     move_left = true;
                 }
                 else {
-                    String str = "";
-                    str += fileData.get(y).substring(0, x);
+                    str = "";
+                    str += fileData.get(y+1).substring(0, x);
                     str += "X";
-                    str += fileData.get(y).substring(x+1);
-                    fileData.set(y, str);
+                    str += fileData.get(y+1).substring(x+1);
+                    fileData.set(y+1, str);
                     y++;
                 }
             }
@@ -71,22 +75,24 @@ public class AdventDay6 {
                     move_up = true;
                 }
                 else {
-                    String str = "";
-                    str += fileData.get(y).substring(0, x);
+                    str = "";
+                    str += fileData.get(y).substring(0, x-1);
                     str += "X";
-                    str += fileData.get(y).substring(x+1);
+                    str += fileData.get(y).substring(x);
                     fileData.set(y, str);
                     x--;
                 }
             }
-            for (int k = 0; k < fileData.size(); k++) {
-                System.out.println(fileData.get(k));
+        }
+        int count = 0;
+        for (int k = 0; k < fileData.size(); k++) {
+            for (int m = 0; m < fileData.get(k).length(); m++) {
+                if (fileData.get(k).charAt(m) == 'X') {
+                    count++;
+                }
             }
         }
-        for (int k = 0; k < fileData.size(); k++) {
-            System.out.println(fileData.get(k));
-        }
-
+        System.out.println(count);
     }
 
     public static ArrayList<String> getFileData(String fileName) {
