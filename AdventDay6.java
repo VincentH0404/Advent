@@ -108,7 +108,7 @@ public class AdventDay6 {
                 str = "";
                 str += fileData.get(i).substring(0, j);
                 str += "#";
-                str += fileData.get(y).substring(j+1);
+                str += fileData.get(i).substring(j+1);
                 fileData.set(i, str);
                 if (doesLoop(x, y, fileData)) {
                     count++;
@@ -125,12 +125,14 @@ public class AdventDay6 {
         Boolean move_right = false;
         Boolean move_left = false;
         int retry = 0;
+        int original_x = x;
+        int original_y = y;
         String str = "";
         str += fileData.get(y).substring(0, x);
         str += "X";
         str += fileData.get(y).substring(x + 1);
         fileData.set(y, str);
-        while (y != fileData.size() - 1 && y != 0 && x != fileData.get(0).length() - 1 && x != 0 && retry != 5000000) {
+        while (y != fileData.size() - 1 && y != 0 && x != fileData.get(0).length() - 1 && x != 0 && retry != 500000) {
             if (move_up) {
                 if (fileData.get(y - 1).charAt(x) == '#') {
                     move_up = false;
@@ -188,7 +190,7 @@ public class AdventDay6 {
             }
             retry++;
         }
-        if (retry == 5000000) {
+        if (retry == 500000) {
             return true;
         }
         return false;
